@@ -1,6 +1,7 @@
 const app = require("./app");
 const http = require("http");
-const port = (process.env.PORT || "3000");
+const port = normalizePort(process.env.PORT || "3000");
+const host = '0.0.0.0';
 app.set("port", port);
 
 const server = http.createServer(app);
@@ -18,6 +19,10 @@ function normalizePort(val) {
   return false;
 }
 
-server.on("listening", () => {
-  console.log(`server is listening for requests on port ${server.address().port}`);
+// server.on("listening", () => {
+//   console.log(`server is listening for requests on port ${server.address().port}`);
+// });
+
+app.listen(process.env.PORT || 3000, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
