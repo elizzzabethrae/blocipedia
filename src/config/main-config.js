@@ -5,7 +5,7 @@ const passportConfig = require("./passport-config");
 const session = require("express-session");
 const flash = require("express-flash");
 const bodyParser = require("body-parser");
-const async = require('async');
+//const async = require('async');
 const sgMail = require('@sendgrid/mail');
 
 module.exports = {
