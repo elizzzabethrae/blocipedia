@@ -9,6 +9,7 @@ module.exports = {
   },
 
    create(req, res, next){
+     console.log(req.json);
      let newUser = {
        email: req.body.email,
        password: req.body.password,
@@ -23,7 +24,7 @@ module.exports = {
        text: 'especially homemade bread',
        html: '<strong>especially homemade bread</strong>',
      };
-     console.log(process.env.SENDGRID_API_KEY)
+     console.log(process.env.SENDGRID_API_KEY);
      sgMail.send(msg);
 
      userQueries.createUser(newUser, (err, user) => {
@@ -41,25 +42,25 @@ module.exports = {
      });
    },
 
-  signInForm(req, res, next){
-     res.render("users/sign_in");
-   },
-
-   signIn(req, res, next){
-     passport.authenticate("local")(req, res, function () {
-       if(!req.user){
-         req.flash("notice", "Sign in failed. Please try again.")
-         res.redirect("/users/sign_in");
-       } else {
-         req.flash("notice", "You've successfully signed in!");
-         res.redirect("/");
-       }
-     })
-   },
-
-   signOut(req, res, next){
-     req.logout();
-     req.flash("notice", "You've successfully signed out!");
-     res.redirect("/");
-   }
+  // signInForm(req, res, next){
+  //    res.render("users/sign_in");
+  //  },
+  //
+  //  signIn(req, res, next){
+  //    passport.authenticate("local")(req, res, function () {
+  //      if(!req.user){
+  //        req.flash("notice", "Sign in failed. Please try again.")
+  //        res.redirect("/users/sign_in");
+  //      } else {
+  //        req.flash("notice", "You've successfully signed in!");
+  //        res.redirect("/");
+  //      }
+  //    })
+  //  },
+  //
+  //  signOut(req, res, next){
+  //    req.logout();
+  //    req.flash("notice", "You've successfully signed out!");
+  //    res.redirect("/");
+  //  }
 }
