@@ -1,19 +1,20 @@
 require("dotenv").config();
 const path = require("path");
 const viewsFolder = path.join(__dirname, "..", "views");
-const passportConfig = require("./passport-config");
+const bodyParser = require("body-parser");
 const session = require("express-session");
 const flash = require("express-flash");
-const bodyParser = require("body-parser");
 //const async = require('async');
 const sgMail = require('@sendgrid/mail');
+const passportConfig = require("./passport-config");
+
 
 module.exports = {
   init(app, express){
-    app.use(bodyParser.urlencoded({ extended: true }));
     app.set("views", viewsFolder);
     app.set("view engine", "ejs");
-    app.use(express.static(path.join(__dirname, "..", "assets")));
+    app.use(bodyParser.urlencoded({ extended: true }));
+
     app.use(session({
      secret: process.env.cookieSecret,
      resave: false,
@@ -27,5 +28,7 @@ module.exports = {
      res.locals.currentUser = req.user;
      next();
    })
+   app.use(express.static(path.join(__dirname, "..", "assets")));
+
   }
 };
