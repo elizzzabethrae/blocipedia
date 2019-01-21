@@ -24,8 +24,7 @@ module.exports = {
          req.flash("error", err);
          res.redirect("/users/signup");
        } else {
-            // console.log("--DEBUG: userQueries.createUser--");
-            // console.log(user);
+
          passport.authenticate("local")(req, res, () => {
            req.flash("notice", "You've successfully signed in!");
            sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -41,10 +40,7 @@ module.exports = {
          })
        }
      });
-
-
      console.log(process.env.SENDGRID_API_KEY);
-
    },
 
   signInForm(req, res, next){
@@ -62,10 +58,10 @@ module.exports = {
        }
      })
    },
-  //
-  //  signOut(req, res, next){
-  //    req.logout();
-  //    req.flash("notice", "You've successfully signed out!");
-  //    res.redirect("/");
-  //  }
+
+   signOut(req, res, next){
+     req.logout();
+     req.flash("notice", "You've successfully signed out!");
+     res.redirect("/");
+   }
 }

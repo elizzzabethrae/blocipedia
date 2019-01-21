@@ -1,4 +1,6 @@
+
 module.exports = {
+
   validateUsers(req, res, next){
     if(req.method === "POST"){
       req.checkBody("name", "must not be empty").notEmpty();
