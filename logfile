@@ -1,0 +1,21 @@
+2019-01-21 21:24:02.313 EST [6873] LOG:  listening on IPv6 address "::1", port 5432
+2019-01-21 21:24:02.313 EST [6873] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-01-21 21:24:02.314 EST [6873] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-01-21 21:24:02.326 EST [6874] LOG:  database system was shut down at 2019-01-21 21:23:52 EST
+2019-01-21 21:24:02.328 EST [6873] LOG:  database system is ready to accept connections
+2019-01-21 21:24:18.200 EST [6890] FATAL:  role "postgres" does not exist
+2019-01-21 21:26:18.187 EST [6907] FATAL:  role "postgres" does not exist
+2019-01-21 21:28:56.713 EST [6946] FATAL:  database "du" does not exist
+2019-01-21 21:29:38.102 EST [6953] FATAL:  database "lizwarners" does not exist
+2019-01-21 21:29:47.592 EST [6956] FATAL:  database "blocipedia-dev" does not exist
+2019-01-21 21:29:55.675 EST [6959] FATAL:  database "blocipedia-dev" does not exist
+2019-01-21 21:30:05.026 EST [6964] FATAL:  database "bloccit-dev" does not exist
+2019-01-22 13:04:41.514 EST [7594] FATAL:  role "bloccit-development" does not exist
+2019-01-22 13:04:41.517 EST [7595] FATAL:  role "bloccit-development" does not exist
+2019-01-22 16:03:21.870 EST [10511] FATAL:  database "bloccit-dev" does not exist
+2019-01-22 17:37:43.469 EST [14900] FATAL:  role "bloccit-development" does not exist
+2019-01-22 17:37:43.470 EST [14901] FATAL:  role "bloccit-development" does not exist
+2019-01-22 17:42:13.058 EST [6873] LOG:  received smart shutdown request
+2019-01-22 17:42:13.059 EST [6873] LOG:  background worker "logical replication launcher" (PID 6880) exited with exit code 1
+2019-01-22 17:42:13.059 EST [6875] LOG:  shutting down
+2019-01-22 17:42:13.067 EST [6873] LOG:  database system is shut down
