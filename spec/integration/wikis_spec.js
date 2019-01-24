@@ -3,16 +3,37 @@ const server = require("../../src/server");
 const base = "http://localhost:3000/wikis/";
 const sequelize = require("../../src/db/models/index").sequelize;
 const Wiki = require("../../src/db/models").Wiki;
+const User = require("../../src/db/models").User;
 
 describe("routes : wikis", () => {
 
   beforeEach((done) => {
+  this.user;
   this.wiki;
   sequelize.sync({force: true}).then((res) => {
 
+  User.create({
+    name: "Liz",
+    email: "liz@email.com",
+    password: "test123"
+    })
+    .then((user) => {
+      request.get({
+        url: "http://localhost:3000/auth/fake",
+        form: {
+          role: user.role,
+          userId: user.id,
+          email: user.email
+        }
+      }, (err, res, body) => {
+        done();
+      });
+      this.user = user;
    Wiki.create({
      title: "Dogs",
-     description: "Bully breeds are my favorite"
+     body: "Bully breeds are my favorite",
+     private: false,
+     userId: this.user.id
    })
     .then((wiki) => {
       this.wiki = wiki;
@@ -23,6 +44,7 @@ describe("routes : wikis", () => {
       done();
     });
   });
+});
 });
 
   describe("GET /wikis", () => {
