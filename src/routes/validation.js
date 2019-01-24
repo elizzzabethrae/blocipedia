@@ -29,6 +29,7 @@ module.exports = {
       req.flash("error", errors);
       return res.redirect(req.headers.referer);
     } else{
+      console.log("Validating User");
       return next();
     }
   }
