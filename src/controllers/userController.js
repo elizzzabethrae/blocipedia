@@ -48,8 +48,10 @@ module.exports = {
    },
 
    signIn(req, res, next){
-     passport.authenticate("local")(req, res, function () {
-       if(!req.user){
+     passport.authenticate("local")(req, res, () => {
+       console.log("here");
+       console.log(req.user);
+       if(err){
          req.flash("notice", "Sign in failed. Please try again.")
          res.redirect("/users/sign_in");
        } else {
@@ -58,6 +60,8 @@ module.exports = {
        }
      })
    },
+
+
 
    signOut(req, res, next){
      req.logout();
