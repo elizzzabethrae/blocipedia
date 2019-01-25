@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    body: {
+     body: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Wiki.belongsTo(models.User, {
       foreignKey: "userId",
-      onDelete: "CASCADE"
+      onDelete: "CASCADE",
     });
   };
   return Wiki;
