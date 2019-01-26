@@ -1,4 +1,3 @@
-
 const userQueries = require("../db/queries.users.js");
 const passport = require("passport");
 const sgMail = require('@sendgrid/mail');
@@ -19,13 +18,6 @@ module.exports = {
       passwordConfirmation: req.body.passwordConfirmation
     };
 
-<<<<<<< HEAD
-     userQueries.createUser(newUser, (err, user) => {
-       if(err){
-         req.flash("error", err);
-         res.redirect("/users/signup");
-       } else {
-=======
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     const msg = {
       to: 'elizabethwarners@gmail.com',
@@ -42,7 +34,6 @@ module.exports = {
         req.flash("error", err);
         res.redirect("/users/signup");
       } else {
->>>>>>> wiki-crud
 
 
         passport.authenticate("local")(req, res, () => {
@@ -58,21 +49,6 @@ module.exports = {
    },
 
    signIn(req, res, next){
-<<<<<<< HEAD
-        passport.authenticate('local', function(err, user, info) {
-             if (err) { return next(err); }
-             if (!user) {
-               req.flash("notice", "Login error. Did you enter the correct username and password?")
-               return res.redirect("/users/sign_in");
-             }
-             req.flash("notice", "Login Success!");
-             req.logIn(user, function(err) {
-               if (err) { return next(err); }
-               return res.redirect('/');
-             });
-           })(req, res, next);
-      },
-=======
      passport.authenticate("local")(req, res, () => {
        console.log(req.user);
        if(!req.user){
@@ -86,7 +62,6 @@ module.exports = {
    },
 
 
->>>>>>> wiki-crud
 
    signOut(req, res, next){
      req.logout();

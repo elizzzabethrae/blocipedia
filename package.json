@@ -19,13 +19,8 @@
   "homepage": "https://github.com/elizzzabethrae/blocipedia#readme",
   "devDependencies": {
     "faker": "^4.1.0",
-<<<<<<< HEAD
-    "jasmine": "^3.0.0",
-    "request": "^2.88.0"
-=======
     "jasmine": "^3.3.1",
     "request": "^2.83.0"
->>>>>>> wiki-crud
   },
   "dependencies": {
     "@sendgrid/mail": "^6.3.1",

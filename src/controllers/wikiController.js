@@ -20,7 +20,7 @@ module.exports = {
   create(req, res, next){
     let newWiki = {
       title: req.body.title,
-      body: req.body.body
+      description: req.body.description
     };
     wikiQueries.addWiki(newWiki, (err, wiki) => {
       if(err){
