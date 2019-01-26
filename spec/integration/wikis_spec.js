@@ -31,7 +31,7 @@ describe("routes : wikis", () => {
   //     this.user = user;
       Wiki.create({
         title: "Dogs",
-        description: "Bully breeds are my favorite",
+        body: "Bully breeds are my favorite",
         // private: false,
         // userId: this.user.id
       })
@@ -40,6 +40,7 @@ describe("routes : wikis", () => {
         done();
       })
       .catch((err) => {
+\
         console.log(err);
         done();
       });
@@ -75,7 +76,7 @@ describe("routes : wikis", () => {
       url: `${base}create`,
       form: {
         title: "dog names",
-        description: "What's your dog's name?",
+        body: "What's your dog's name?",
         private: false
       }
     };
@@ -86,7 +87,7 @@ describe("routes : wikis", () => {
           .then((wiki) => {
             expect(res.statusCode).toBe(303);
             expect(wiki.title).toBe("dog names");
-            expect(wiki.description).toBe("What's your dog's name?");
+            expect(wiki.body).toBe("What's your dog's name?");
             done();
           })
           .catch((err) => {
@@ -102,7 +103,7 @@ describe("routes : wikis", () => {
     it("should render a view with the selected wiki", (done) => {
       request.get(`${base}${this.wiki.id}`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(description).toContain("Dogs");
+        expect(body).toContain("Dogs");
         done();
       });
     });
@@ -145,7 +146,7 @@ describe("routes : wikis", () => {
           url: `${base}${this.wiki.id}/update`,
           form: {
             title: "Dogs",
-            description: "Bully breeds are my favorite"
+            body: "Bully breeds are my favorite"
           }
         };
         request.post(options,

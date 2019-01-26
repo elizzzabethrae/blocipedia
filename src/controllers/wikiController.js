@@ -13,6 +13,7 @@ module.exports = {
     })
   },
 
+
   new(req, res, next){
     res.render("wikis/new");
   },
@@ -20,10 +21,12 @@ module.exports = {
   create(req, res, next){
     let newWiki = {
       title: req.body.title,
-      description: req.body.description
+      body: req.body.body,
+      userId: req.user.id
     };
     wikiQueries.addWiki(newWiki, (err, wiki) => {
       if(err){
+        console.log("ERROR:", err);
         res.redirect(500, "/wikis/new");
       } else {
         res.redirect(303, `/wikis/${wiki.id}`);
@@ -44,6 +47,7 @@ module.exports = {
   destroy(req, res, next){
     wikiQueries.deleteWiki(req.params.id, (err, wiki) => {
       if(err){
+        console.log(err);
         res.redirect(500, `/wikis/${wiki.id}`)
       } else {
         res.redirect(303, "/wikis")
