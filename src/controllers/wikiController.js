@@ -1,4 +1,5 @@
 const wikiQueries = require("../db/queries.wikis.js");
+const Authorizer = require("../policies/wiki");
 
 module.exports = {
 
@@ -15,23 +16,35 @@ module.exports = {
 
 
   new(req, res, next){
-    res.render("wikis/new");
+    const authorized = new Authorizer(req.user).new();
+    if(authorized) {
+      res.render("wikis/new");
+      } else {
+        req.flash("notice", "You are not authorized to do that.");
+        res.redirect("/wikis");
+      }
   },
 
   create(req, res, next){
-    let newWiki = {
-      title: req.body.title,
-      body: req.body.body,
-      userId: req.user.id
-    };
-    wikiQueries.addWiki(newWiki, (err, wiki) => {
-      if(err){
-        console.log("ERROR:", err);
-        res.redirect(500, "/wikis/new");
-      } else {
-        res.redirect(303, `/wikis/${wiki.id}`);
+    const authorized = new Authorizer(req.user).create();
+    if(authorized){
+      let newWiki = {
+        title: req.body.title,
+        body: req.body.body,
+        userId: req.user.id
+      };
+      wikiQueries.addWiki(newWiki, (err, wiki) => {
+        if(err){
+          console.log("ERROR:", err);
+          res.redirect(500, "/wikis/new");
+        } else {
+          res.redirect(303, `/wikis/${wiki.id}`);
+        }
+      });
+    } else {
+      req.flash("notice", "You are not authorized to do that.");
+      res.redirect("/wikis");
       }
-    });
   },
 
   show(req, res, next){
@@ -45,6 +58,8 @@ module.exports = {
   },
 
   destroy(req, res, next){
+    const authorized = new Authorizer(req.user).destroy();
+    if(authorized) {
     wikiQueries.deleteWiki(req.params.id, (err, wiki) => {
       if(err){
         console.log(err);
@@ -53,6 +68,10 @@ module.exports = {
         res.redirect(303, "/wikis")
       }
     });
+  } else {
+    req.flash("notice", "You are not authorized to do that.");
+    res.redirect("/wikis/${req.params.id}");
+  }
   },
 
   edit(req, res, next){
@@ -66,6 +85,8 @@ module.exports = {
   },
 
   update(req, res, next){
+    const authorized = new Authorizer(req.user).update();
+    if(authorized){
     wikiQueries.updateWiki(req.params.id, req.body, (err, wiki) => {
       if(err || wiki == null){
         res.redirect(404, `/wikis/${req.params.id}/edit`);
@@ -73,6 +94,10 @@ module.exports = {
         res.redirect(`/wikis/${wiki.id}`);
       }
     });
+  } else {
+    req.flash("notice", "You are not authorized to do that.");
+    res.redirect("/wikis/${req.params.id}");
+  }
   }
 
 }
