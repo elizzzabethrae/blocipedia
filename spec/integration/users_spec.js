@@ -24,7 +24,7 @@ describe("routes : users", () => {
     it("should render a view with a sign up form", (done) => {
       request.get(`${base}signup`, (err, res, body) => {
         expect(err).toBeNull();
-        expect(body).toContain("Sign up");
+        expect(body).toContain("Sign");
         done();
       });
     });
@@ -33,21 +33,17 @@ describe("routes : users", () => {
 
   describe("POST /users", () => {
 
-// #1
     it("should create a new user with valid values and redirect", (done) => {
-
       const options = {
         url: base,
         form: {
+          name: "liz",
           email: "user@example.com",
           password: "123456789"
         }
       }
-
       request.post(options,
         (err, res, body) => {
-
-// #2
           User.findOne({where: {email: "user@example.com"}})
           .then((user) => {
             expect(user).not.toBeNull();
@@ -63,7 +59,6 @@ describe("routes : users", () => {
       );
     });
 
-// #3
     it("should not create a new user with invalid attributes and redirect", (done) => {
       request.post(
         {
@@ -88,5 +83,16 @@ describe("routes : users", () => {
     });
 
   });
+
+  describe("GET /users/sign_in", () => {
+
+  it("should render a view with a sign in form", (done) => {
+    request.get(`${base}sign_in`, (err, res, body) => {
+      expect(err).toBeNull();
+      expect(body).toContain("Sign in");
+      done();
+    });
+  });
+});
 
 });
