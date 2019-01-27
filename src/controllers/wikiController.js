@@ -39,7 +39,7 @@ module.exports = {
           console.log("ERROR:", err);
           res.redirect(500, "/wikis/new");
         } else {
-          res.redirect(303, "/wikis/${wiki.id}");
+          res.redirect(303, `/wikis/${wiki.id}`);
         }
       });
     } else {
@@ -72,7 +72,7 @@ module.exports = {
     });
   } else {
     req.flash("notice", "You are not authorized to do that.");
-    res.redirect("/wikis/${req.params.id}/");
+    res.redirect(`/wikis/${req.params.id}/`);
   }
 
   },
@@ -82,6 +82,7 @@ module.exports = {
       if(err || wiki == null){
         res.redirect(404, "/");
       } else {
+        console.log(err);
         res.render("wikis/edit", {wiki});
       }
     });
@@ -91,9 +92,10 @@ module.exports = {
 
     wikiQueries.updateWiki(req.params.id, req.body, (err, wiki) => {
       if(err || wiki == null){
-        res.redirect(404, "/wikis/${req.params.id}/edit");
+        res.redirect(404, `/wikis/${req.params.id}/edit`);
       } else {
-        res.redirect("/wikis/${req.params.id");
+        console.log(err);
+        res.redirect(`/wikis/${req.params.id}`);
       }
     });
   }
