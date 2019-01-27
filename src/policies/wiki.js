@@ -1,21 +1,46 @@
-// #1
+
 const ApplicationPolicy = require("./application");
 
 module.exports = class WikiPolicy extends ApplicationPolicy {
 
-// #2
+     _isOwner() {
+       return this.record && (this.record.userId == this.user.id);
+     }
 
- create() {
-   return this.new();
- }
+     _isAdmin() {
+       return this.user && this.user.role == 2;
+     }
 
-// #3
+     _isStandard() {
+        return this.user && this.user.role == 0;
+      }
 
- update() {
-   return this.edit();
- }
+      _isPremium() {
+        return this.user && this.user.role == 1;
+      }
 
- destroy() {
-   return this.update();
- }
-}
+     new() {
+       return this._isAdmin();
+     }
+
+     create() {
+       return this.new();
+     }
+
+     show() {
+       return true;
+     }
+
+     edit() {
+       return true;
+      }
+
+     update() {
+       return this.edit();
+     }
+
+     destroy() {
+       return this._isAdmin() || this._isOwner();
+     }
+
+   }
