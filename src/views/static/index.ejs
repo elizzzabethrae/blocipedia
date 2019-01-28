@@ -49,15 +49,15 @@
         <!-- /.row -->
 
         <% if(currentUser) { %>
-          <% if(currentUser.isStandard) { %>
-              <a href="/users/upgrade" class="btn btn-primary btn-lg">Upgrade Account</a>
+          <% if(currentUser.role == 0) { %>
+              <a href="/users/<%=currentUser.id%>/upgrade" class="btn btn-primary btn-lg">Upgrade Account</a>
               <div>
                 Become a Premium Member today to have member perks and access to private wikis
               </div>
           <% } %>
 
-          <% if(currentUser.isPremium) { %>
-              <a href= "/users/downgrade" class="btn btn-primary btn-lg">Downgrade Account</a>
+          <% if(currentUser.role == 1) { %>
+              <a href= "/users/<%=currentUser.id%>/downgrade" class="btn btn-primary btn-lg">Downgrade Account</a>
             <% } %>
 
       <%  } else { %>

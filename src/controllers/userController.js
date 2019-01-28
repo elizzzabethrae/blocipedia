@@ -94,9 +94,9 @@ module.exports = {
 
    downgrade(req, res, next){
      userQueries.downgrade(req.params.id, (err, user) => {
-       if(err || user === null){
-         req.flash("notice", "No user found with that ID");
-         res.redirect("/users/downgrade");
+       if(err){
+         req.flash("notice", "There was an error processing this request");
+         res.redirect("users/downgrade");
        } else{
          req.flash("notice", "Your account has been reverted back to standard");
          res.redirect(`/`);
@@ -109,4 +109,5 @@ module.exports = {
      req.flash("notice", "You've successfully signed out!");
      res.redirect("/");
    }
+
 }

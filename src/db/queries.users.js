@@ -38,10 +38,10 @@ module.exports = {
     return User.findById(id)
     .then((user) => {
       if(!user){
+        console.log("This is the user" + user);
         return callback("User not found");
       } else{
-        user.update
-        ({role: 1})
+        user.update({role: 1})
         .then((user) => {
           callback(null, user);
         })
@@ -58,8 +58,7 @@ module.exports = {
       if(!user){
         return callback("User not found");
       } else{
-        user.update
-        ({role: 0})
+        user.update({role: 0})
         .then((user) => {
           callback(null, user);
         })
