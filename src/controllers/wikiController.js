@@ -33,7 +33,10 @@ module.exports = {
         title: req.body.title,
         body: req.body.body,
         userId: req.user.id
-      };
+      }
+      if (req.body.private) {
+        newWiki.private = true;
+      }
       wikiQueries.addWiki(newWiki, (err, wiki) => {
         if(err){
           console.log("ERROR:", err);
@@ -62,19 +65,18 @@ module.exports = {
     const authorized = new Authorizer(req.user).destroy();
     console.log(authorized);
     if(authorized) {
-    wikiQueries.deleteWiki(req.params.id, (err, wiki) => {
-      if(err){
-        console.log(err);
-        res.redirect(500, `/wikis/${wiki.id}`)
-      } else {
-        res.redirect(303, "/wikis")
-      }
-    });
-  } else {
-    req.flash("notice", "You are not authorized to do that.");
-    res.redirect(`/wikis/${req.params.id}/`);
-  }
-
+      wikiQueries.deleteWiki(req.params.id, (err, wiki) => {
+        if(err){
+          console.log(err);
+          res.redirect(500, `/wikis/${wiki.id}`)
+        } else {
+          res.redirect(303, "/wikis")
+        }
+      });
+    } else {
+      req.flash("notice", "You are not authorized to do that.");
+      res.redirect(`/wikis/${req.params.id}/`);
+    }
   },
 
   edit(req, res, next){
@@ -87,6 +89,42 @@ module.exports = {
       }
     });
   },
+
+  makePrivate(req, res, next){
+  wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+
+    if(err || wiki == null){
+      console.log("There was an error processing your request");
+      res.redirect(401, `/wikis/${req.params.id}`);
+       } else {
+       const authorized = new Authorizer(req.user, wiki).edit();
+         if(authorized){
+         wiki.private = true;
+         wiki.save();
+         req.flash("This wiki is now private.");
+         res.redirect(`/wikis/${req.params.id}`);
+       }
+       }
+     });
+},
+
+makePublic(req, res, next){
+  wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+
+    if(err || wiki == null){
+      console.log("There was an error processing your request.");
+      res.redirect(401, `/wikis/${req.params.id}`);
+       } else {
+       const authorized = new Authorizer(req.user, wiki).edit();
+         if(authorized){
+         wiki.private = false;
+         wiki.save();
+         req.flash("Your wiki is now public");
+         res.redirect(`/wikis/${req.params.id}`);
+       }
+       }
+     });
+},
 
   update(req, res, next){
 

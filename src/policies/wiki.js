@@ -20,11 +20,15 @@ module.exports = class WikiPolicy extends ApplicationPolicy {
       }
 
      new() {
-       return this._isAdmin();
+       return this.user != null;
      }
 
      create() {
        return this.new();
+     }
+
+     createPrivate() {
+       return this.newPrivate();
      }
 
      show() {
