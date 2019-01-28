@@ -61,6 +61,9 @@ module.exports = {
      })
    },
 
+   upgradePage(req, res, next){
+      res.render("users/upgrade");
+    },
 
    upgrade (req, res, next){
      const stripe = require("stripe")("sk_test_UJwtSaMrtxRrCndqkQODGhuz");
@@ -70,30 +73,34 @@ module.exports = {
        currency: "usd",
        description: "Upgrade",
        source: token,
-       statement_descriptor: 'Blocipedia Upgrade to Premium',
+       statement_descriptor: 'Blocipedia Upgrade',
        capture: false,
-
-
      });
      userQueries.upgrade(req.params.id, (err, user) => {
        if(err && err.type ==="StripeCardError"){
-         req.flash("notice", "Your card was declined");
-         res.redirect("/users/profile");
+         req.flash("notice", "Your payment was unsuccessful");
+         res.redirect("/users/upgrade");
        } else{
-         req.flash("notice", "Your payment via stripe was successful, Thank you!");
-         res.redirect(`/users/${req.params.id}`);
+         req.flash("notice", "Your payment via stripe was successful, you are now a Premium Member!");
+         res.redirect(`/`);
+
        }
      }) ;
+   },
+
+   downgradePage(req, res, next) {
+     res.render("users/downgrade");
+
    },
 
    downgrade(req, res, next){
      userQueries.downgrade(req.params.id, (err, user) => {
        if(err || user === null){
          req.flash("notice", "No user found with that ID");
-         res.redirect("/");
+         res.redirect("/users/downgrade");
        } else{
          req.flash("notice", "Your account has been reverted back to standard");
-         res.redirect(`/users/${req.params.id}`);
+         res.redirect(`/`);
        }
      });
    },
