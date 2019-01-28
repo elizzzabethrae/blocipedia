@@ -10,6 +10,7 @@ router.get("/users/sign_in", userController.signInForm);
 router.post("/users/sign_in", validation.validateUserSignIn, userController.signIn);
 router.get("/users/sign_out", userController.signOut);
 router.post("/users", validation.validateUsers, userController.create);
+router.get("/users/downgradePage", userController.downgradePage)
 router.post("/users/downgrade", userController.downgrade);
 router.get("/users/upgrade", userController.upgradePage);
 router.post("/users/upgrade", userController.upgrade);

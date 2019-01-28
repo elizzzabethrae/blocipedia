@@ -25,22 +25,8 @@
           <p class="lead">A wiki application platform</p>
           <% include ./partials/messages.ejs %>
 
-
-          <% if(currentUser) { %>
-            <% if(currentUser.isStandard) { %>
-                <a href="/users/upgrade" class="btn btn-primary btn-lg">Upgrade Account</a>
-            <% } %>
-
-            <% if(currentUser.isPremium) { %>
-                <a href= "/users/downgrade" class="btn btn-primary btn-lg">Downgrade Account</a>
-              <% } %>
-
-        <%  } else { %>
-          <a href="/users/signup" class="btn btn-primary btn-lg">Sign up</a>
-        <% } %>
-        
         </header>
-
+        <body>
         <!-- Page Features -->
       <!--  <section class="row text-center">
 
@@ -62,8 +48,24 @@
         </section>
         <!-- /.row -->
 
+        <% if(currentUser) { %>
+          <% if(currentUser.isStandard) { %>
+              <a href="/users/upgrade" class="btn btn-primary btn-lg">Upgrade Account</a>
+              <div>
+                Become a Premium Member today to have member perks and access to private wikis
+              </div>
+          <% } %>
+
+          <% if(currentUser.isPremium) { %>
+              <a href= "/users/downgrade" class="btn btn-primary btn-lg">Downgrade Account</a>
+            <% } %>
+
+      <%  } else { %>
+        <a href="/users/signup" class="btn btn-primary btn-lg">Sign up</a>
+      <% } %>
+
+      </body>
       </main>
-      <!-- /.container -->
 
       <script
         src="http://code.jquery.com/jquery-3.3.1.min.js"

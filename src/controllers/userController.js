@@ -90,7 +90,6 @@ module.exports = {
 
    downgradePage(req, res, next) {
      res.render("users/downgrade");
-
    },
 
    downgrade(req, res, next){
