@@ -62,95 +62,42 @@ module.exports = {
    },
 
 
-   upgrade(req, res, next){
-     User.findById(req.params.id)
-     .then(user => {
-       res.render('users/upgrade', {user});
-     })
-     .catch(err => {
-       req.flash("error", err);
-       res.redirect("/");
-     })
+   upgrade (req, res, next){
+     const stripe = require("stripe")("sk_test_UJwtSaMrtxRrCndqkQODGhuz");
+     const token = req.body.stripeToken;
+     const charge = stripe.charges.create({
+       amount: 1500,
+       currency: "usd",
+       description: "Upgrade",
+       source: token,
+       statement_descriptor: 'Blocipedia Upgrade to Premium',
+       capture: false,
+
+
+     });
+     userQueries.upgrade(req.params.id, (err, user) => {
+       if(err && err.type ==="StripeCardError"){
+         req.flash("notice", "Your card was declined");
+         res.redirect("/users/profile");
+       } else{
+         req.flash("notice", "Your payment via stripe was successful, Thank you!");
+         res.redirect(`/users/${req.params.id}`);
+       }
+     }) ;
    },
 
    downgrade(req, res, next){
-     res.render("users/downgrade");
-   },
-
-   downgradeForm(req, res, next){
-      let newDowngrade = {
-         name: req.body.name, //form not sending body
-         email: req.body.email,
-         description: req.body.description
-       };
-
-       User.findById(req.params.id)
-       .then(user => {
-         user.role = 0;
-         user.save();
-
-         req.flash("notice", "You are now a standard user!");
+     userQueries.downgrade(req.params.id, (err, user) => {
+       if(err || user === null){
+         req.flash("notice", "No user found with that ID");
          res.redirect("/");
-
-       sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-       const msg = {
-         to: 'elizebathewarners@gmail.com',
-         from: 'test@example.com',
-         subject:  'downgrade',
-         text: 'refund their credit card',
-         html: '<strong>refund their credit card</strong>',
-       };
-          console.log(process.env.SENDGRID_API_KEY)
-          sgMail.send(msg).then( () => {
-            console.log("Successfully Sent Mail!");
-          })
-          .catch( error => {
-            console.error(error.toString());
-          });
-
-       userQueries.createDowngrade(newDowngrade, (err, user) => {
-         if(err){
-           req.flash("error", err);
-           console.log(err);
-           res.redirect("/");
-         } else {
-
-           passport.authenticate("local")(req, res, () => {
-             req.flash("notice", "You've successfully Downgraded!");
-             res.redirect("/");
-           })
-         }
-       });
-
-     })
+       } else{
+         req.flash("notice", "Your account has been reverted back to standard");
+         res.redirect(`/users/${req.params.id}`);
+       }
+     });
    },
 
-      charge(req, res, next){
-          User.findById(req.params.id)
-          .then(user => {
-            console.log(user);
-            var stripeToken = req.body.stripeToken;
-            // Charge the user's card:
-            stripe.charges.create({
-              amount: 1500,
-              currency: "usd",
-              description: "Upgrade tp premium User",
-              source: stripeToken,
-            }, function(err, charge) {
-              user.role = 1;
-              user.save();
-
-            req.flash("notice", "You are now a premium user!");
-            res.redirect("/");
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          req.flash("notice", "Error upgrading.  Please try again.");
-          res.redirect("/");
-        });
-      },
-      
    signOut(req, res, next){
      req.logout();
      req.flash("notice", "You've successfully signed out!");

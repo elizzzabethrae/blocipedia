@@ -11,20 +11,26 @@
 
 <h2>UPGRADE</h2>
 
-<% if(currentUser) { %>
-<form action="/users/<%= currentUser.id %>/upgrade" method="POST">
-  <script
-  src="https://checkout.stripe.com/checkout.js"
-  class= "stripe-button"
-  data-key = "pk_test_gop2Pm5vMFyk5NgWTko2KGWd"
-  data-amount = "1500"
-  data-zip-code="true"
-  data-description = "upgrade"
-  data-locale = "auto"
-  data-currency = "usd">
-</script>
-<input type ="hidden" name="chargeAmount" value="1500">
-  <% }%>
+
+<p>With this upgrade you will recieve access to your own private wikis.</p>
+ <div class="row">
+  <div class="col-md-8">
+    <form action="/users/<%=currentUser.id %>/upgrade" method="POST">
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="pk_test_gop2Pm5vMFyk5NgWTko2KGWd"
+        data-amount="1500"
+        data-name="Upgrade to premium account"
+        data-description="The premium account offers the ability to make private wikis."
+        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+        data-locale="auto"
+        data-currency = "usd">
+      </script>
+    </form>
+   </div>
+ </div>
+
+
 
  </main>
 

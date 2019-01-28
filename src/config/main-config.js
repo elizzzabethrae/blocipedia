@@ -8,6 +8,8 @@ const flash = require("express-flash");
 const sgMail = require('@sendgrid/mail');
 const passportConfig = require("./passport-config");
 const expressValidator = require("express-validator");
+const stripe = require("stripe")("sk_test_UJwtSaMrtxRrCndqkQODGhuz");
+
 
 
 module.exports = {

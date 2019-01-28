@@ -10,15 +10,16 @@
           <a class="nav-link" href="/">Home</a>
         </li>
         <% if(currentUser) { %>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="/users/<%= currentUser.id %>">Profile</a>
-          </li> -->
+        <%  console.log(currentUser.role);  %>
+        <li class="nav-item">
+          <a class="nav-link" href="/wikis">Wikis</a>
+        </li>
+
           <li class="nav-item">
             <a class="nav-link" href="/users/sign_out">Sign out</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/wikis">Wikis</a>
-          </li>
+
+
           <% } else { %>
           <li class="nav-item">
             <a class="nav-link" href="/users/signup">Sign up</a>
@@ -27,16 +28,6 @@
             <a class="nav-link" href="/users/sign_in">Sign in</a>
           </li>
           <% }%>
-          <% if(req.user.role == 0) { %>
-            <li class ="nav-item">
-              <a class="nav-link" href="/users/upgrade">Upgrade Account</a>
-            </li>
-          <% } %>
-          <% if(req.user.role == 1)r { %>
-            <li class="nav-item">
-              <a class="nav-link" href= "/users/downgrade">Downgrade Account</a>
-            </li>
-            <% } %>
         </ul>
     </div>
   </div>
