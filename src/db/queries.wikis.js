@@ -70,13 +70,12 @@ module.exports = {
   privateToPublic(id) {
     return Wiki.all().then((wikis) => {
       wikis.forEach((wiki) => {
-        if(wiki.userId === id && wiki.private === true) {
+        if(wiki.private == true && wiki.userId == id) {
+          console.log(wiki);
+          console.log("user id", id);
           wiki.update({ private: false })
         }
       })
-    })
-    .catch((err) => {
-      callback(err);
     })
   }
 
