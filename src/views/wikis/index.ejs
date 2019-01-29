@@ -17,7 +17,7 @@
             <% if(currentUser) { %>
             <%if(currentUser.role == 1 || currentUser.role == 2) { %>
           <li class="list-group-item">
-            <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> </a>
+            <a href="/wikis/<%= wiki.id %>"> <%= wiki.title %> - A Private Wiki </a>
           </li>
 
           <% } %>
