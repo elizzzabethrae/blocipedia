@@ -15,8 +15,10 @@
       <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post"> -->
         <button type="submit" class="btn btn-danger">Delete</button>
       <h1><%= wiki.title %></h1>
-
-      </form>
+    </form>
+      <% if(wiki.private == true) { %>
+        <h5>- This wiki is Private -</h5>
+      <% } %>
       <p><%= wiki.body %></p>
     </main>
 

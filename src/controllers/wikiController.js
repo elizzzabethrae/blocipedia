@@ -19,7 +19,6 @@ module.exports = {
     const authorized = new Authorizer(req.user).new();
     if(authorized) {
       res.render("wikis/new");
-
     } else {
       req.flash("notice", "You are not authorized to do that.");
       res.redirect("/wikis");
@@ -90,51 +89,15 @@ module.exports = {
     });
   },
 
-  makePrivate(req, res, next){
-  wikiQueries.updateWiki(req, req.body, (err, wiki) => {
 
-    if(err || wiki == null){
-      console.log("There was an error processing your request");
-      res.redirect(401, `/wikis/${req.params.id}`);
-       } else {
-       const authorized = new Authorizer(req.user, wiki).edit();
-         if(authorized){
-         wiki.private = true;
-         wiki.save();
-         req.flash("This wiki is now private.");
-         res.redirect(`/wikis/${req.params.id}`);
-       }
-       }
-     });
-},
 
-makePublic(req, res, next){
-  wikiQueries.updateWiki(req, req.body, (err, wiki) => {
-
-    if(err || wiki == null){
-      console.log("There was an error processing your request.");
-      res.redirect(401, `/wikis/${req.params.id}`);
-       } else {
-       const authorized = new Authorizer(req.user, wiki).edit();
-         if(authorized){
-         wiki.private = false;
-         wiki.save();
-         req.flash("Your wiki is now public");
-         res.redirect(`/wikis/${req.params.id}`);
-       }
-       }
-     });
-},
-
-  update(req, res, next){
-
-    wikiQueries.updateWiki(req.params.id, req.body, (err, wiki) => {
-      if(err || wiki == null){
-        res.redirect(404, `/wikis/${req.params.id}/edit`);
-      } else {
-        console.log(err);
-        res.redirect(`/wikis/${req.params.id}`);
-      }
-    });
-  }
+update(req, res, next){
+      wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+        if(err || wiki == null){
+          res.redirect(401, `/wikis/${req.params.id}/edit`);
+        } else {
+          res.redirect(`/wikis/${req.params.id}`);
+        }
+      });
+    }
 }
