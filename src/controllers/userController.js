@@ -92,7 +92,17 @@ module.exports = {
      res.render("users/downgrade");
    },
 
+
    downgrade(req, res, next){
+     console.log(`${req.params.id}`);
+
+     Wiki.update({
+        private: false }, {
+      where: {
+      userId: req.params.id
+      }
+      });
+
      userQueries.downgrade(req.params.id, (err, user) => {
        if(err){
          req.flash("notice", "There was an error processing this request");

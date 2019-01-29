@@ -88,8 +88,43 @@ module.exports = {
     });
   },
 
-  update(req, res, next){
+  makePrivate(req, res, next){
+    wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+      if(err || wiki == null){
+        console.log("error", err);
+        req.flash("notice", "There was an error processing your request.")
+        res.redirect(401, `/wikis/${req.params.id}`);
+      } else {
+        // const authorized = new Authorizer(req.user, wiki).edit();
+        // if(authorized){
+          wiki.private = true;
+          wiki.save();
+          req.flash("Your wiki is now private");
+          res.redirect(`/wikis/${req.params.id}`);
+        //}
+      }
+    });
+  },
 
+  makePublic(req, res, next){
+    wikiQueries.updateWiki(req, req.body, (err, wiki) => {
+      if(err || wiki == null){
+        console.log("error", err);
+        req.flash("notice", "There was an error processing your request.")
+        res.redirect(401, `/wikis/${req.params.id}`);
+      } else {
+        // const authorized = new Authorizer(req.user, wiki).edit();
+        // if(authorized){
+          wiki.private = false;
+          wiki.save();
+          req.flash("Your wiki is now public");
+          res.redirect(`/wikis/${req.params.id}`);
+        //}
+      }
+    });
+  },
+
+  update(req, res, next){
     wikiQueries.updateWiki(req.params.id, req.body, (err, wiki) => {
       if(err || wiki == null){
         res.redirect(404, `/wikis/${req.params.id}/edit`);

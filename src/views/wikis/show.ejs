@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,18 +5,26 @@
   </head>
   <body>
     <% include ../static/partials/navbar.ejs %>
-    <% include ../static/partials/messages.ejs %>
 
     <main class="container">
-      <br>
-      <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
-      <a href="/wikis/new" class="btn btn-success">New Wiki</a>
-      <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
-        <button type="submit" class="btn btn-danger">Delete</button>
       <h1><%= wiki.title %></h1>
 
+
+      <% if(currentUser) { %>
+      <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
+
+    <% if(wiki.private) { %>
+      <p>- This wiki is Private -</p>
+      <a href="/wikis/<%= wiki.id %>/makePublic" class="btn btn-success">Make Wiki Public</a>
+    <% } else { %>
+      <p>- This wiki is Public -</p>
+      <a href="/wikis/<%= wiki.id %>/makePrivate" class="btn btn-success">Make Wiki Private</a>
+      <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
       </form>
-      <p><%= wiki.body %></p>
+      <% } %>
+      <% } %>
+
     </main>
 
   </body>
