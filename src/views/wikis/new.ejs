@@ -21,7 +21,7 @@
           <label for="body">Description</label>
           <textarea rows="4" class="form-control" name="body" placeholder="Enter Body"></textarea>
         </div>
-        
+
         <% if(currentUser) { %>
           <% if(currentUser.role == 1 || currentUser.role == 2) { %>
               <input type="checkbox" name="private" value="private">Make Private<br>
