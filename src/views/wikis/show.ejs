@@ -18,6 +18,7 @@
     </form>
       <% if(wiki.private == true) { %>
         <h5>- This wiki is Private -</h5>
+        <a href="/wikis/<%= wiki.id %>/collaborators/new" class="btn btn-success">New Collaberator</a>
       <% } %>
       <p><%- markdown.toHTML(wiki.body) %></p>
     </main>

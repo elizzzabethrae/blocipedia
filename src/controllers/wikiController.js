@@ -1,6 +1,8 @@
 const wikiQueries = require("../db/queries.wikis.js");
 const Authorizer = require("../policies/wiki");
 const markdown = require( "markdown" ).markdown;
+const Collaborator = require("../db/models").Collaborator;
+
 
 module.exports = {
 
@@ -91,6 +93,18 @@ module.exports = {
   },
 
 
+//   isCollaborator((nonCollaboMember, collaboMember) => {
+//       const authorized = new Authorizer(nonCollaboMember, wikis, collaboMember).showPrivate();
+//       if(authorized){
+//           res.render("wikis/privateWiki", {wikis});
+//        } else {
+//           req.flash("notice", "You are not authorized to do that.");
+//           res.redirect("/wikis");
+//       }
+//    });
+// }
+// })
+// },
 
 update(req, res, next){
       wikiQueries.updateWiki(req.params.id, req.body, (err, wiki) => {
