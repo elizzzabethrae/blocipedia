@@ -93,7 +93,7 @@ module.exports = {
 
 
 update(req, res, next){
-      wikiQueries.updateWiki(req.params.id, req.params.body, (err, wiki) => {
+      wikiQueries.updateWiki(req.params.id, req.body, (err, wiki) => {
         if(err || wiki == null){
           res.redirect(401, `/wikis/${req.params.id}/edit`);
         } else {
