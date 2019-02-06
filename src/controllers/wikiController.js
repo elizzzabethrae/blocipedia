@@ -32,8 +32,8 @@ module.exports = {
     const authorized = new Authorizer(req.user).create();
     if(authorized) {
       let newWiki = {
-        title: markdown.toHTML(req.body.title),
-        body: markdown.toHTML(req.body.body),
+        title: (req.body.title),
+        body: (req.body.body),
         userId: req.user.id
       }
       if (req.body.private) {

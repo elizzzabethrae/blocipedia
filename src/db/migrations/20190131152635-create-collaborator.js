@@ -28,9 +28,7 @@ module.exports = {
           as: "wikiId"
         }
       },
-      email: {
-        type: Sequelize.STRING
-      }
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

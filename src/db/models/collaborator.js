@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    email: DataTypes.STRING,
+    // email: DataTypes.STRING,
   }, {});
   Collaborator.associate = function(models) {
     // associations can be defined here

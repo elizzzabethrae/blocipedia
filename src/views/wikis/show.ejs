@@ -14,11 +14,14 @@
       <!-- <a href="/wikis/new" class="btn btn-success">New Wiki</a> -->
        <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
         <button type="submit" class="btn btn-danger">Delete</button>
+
       <h1><%- wiki.title %></h1>
     </form>
+
       <% if(wiki.private == true) { %>
-        <h5>- This wiki is Private -</h5>
-        <a href="/wikis/<%= wiki.id %>/collaborators/new" class="btn btn-success">New Collaberator</a>
+        <p>- This wiki is Private -</p>
+        <a href="/wikis/<%= wiki.id %>/collaborators/new" class="btn btn-success">New Collaborator</a>
+        <a href="/wikis/<%= wiki.id %>/collaborators/" class="btn btn-success">Current Collaborators</a>
       <% } %>
       <p><%- markdown.toHTML(wiki.body) %></p>
     </main>
